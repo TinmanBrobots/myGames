@@ -1,0 +1,111 @@
+:root{
+    --width: 150px;
+    --height: 100px;
+    --cols: 4;
+    --buffer: 10px;
+    --font-size: 80;
+    --max-size: 75%;
+    --margin-top: 10%;
+    --margin-side: 1%;
+    --col-dark: #142d4c;
+    --col-med: #385170;
+    --col-light: cyan;
+    --col-white: #ececec;
+    --col-grey: #9ba6a5;
+    --col-black: black;
+    --col-lightgrey: #b3c0be;
+    --col-down: #3e4a61;
+    --col-1: #ff9a3c;
+    --col-2: #ff0000;
+}
+
+body{
+    background-color: var(--col-med);
+}
+
+button{
+    width: 120px;
+    height: 60px;
+    background-color: var(--col-dark);
+    color: var(--col-white);
+    border: 1px solid var(--col-white);
+    border-radius: 5px;
+    position: relative;
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+button:hover{
+    background-color: var(--col-med)!important;
+    border: 1px solid var(--col-white)!important;
+    color: var(--col-white)!important;
+}
+button:active{
+    background-color: var(--col-down)!important;
+    border: 1px solid var(--col-lightgrey)!important;
+    color: var(--col-lightgrey)!important;
+}
+button:disabled,
+button[disabled=true]{
+    background-color: var(--col-down)!important;
+    border: 1px solid var(--col-down)!important;
+    color: var(--col-grey)!important;
+}
+
+#stats{
+    width: 100px;
+    height: calc(3 * var(--height));
+    border: 1px solid var(--col-white);
+    border-radius: 5px;
+    margin: auto;
+    padding: 10px;
+    position: relative;
+    display: inline-block;
+    background-color: var(--col-dark);
+    color: var(--col-white);
+    text-align: center;
+}
+
+.statItem{
+    position: relative;
+    display: inline-block;
+}
+
+#board{
+    margin-left: 5px;
+    position: absolute;
+    display: inline-block;
+}
+
+.lastset{
+    display: inline-block;
+    border: 1px solid var(--col-black);
+    padding: 3px;
+    position: relative;
+}
+
+.card{
+    width: var(--width);
+    height: var(--height);
+    border: 1px solid var(--col-black);
+    border-radius: 10px;
+    background-color: var(--col-white);
+    text-align: center;
+}
+
+.smallCard{
+    width: calc(var(--width) / 2);
+    height: calc(var(--height) / 2);
+    border: 1px solid var(--col-black);
+    border-radius: 5px;
+    background-color: var(--col-white);
+    text-align: center;
+}
+
+.figure{
+    max-width: var(--max-size);
+    max-height: var(--max-size);
+    margin-top: var(--margin-top);
+    margin-left: var(--margin-side);
+    margin-right: var(--margin-side);
+}

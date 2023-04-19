@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" onClick="select">
+<head>
+    <meta cahrset="UTF-8" />
+    <title>SET</title>
+    <link rel="stylesheet" href="setstyle.css" />
+</head>
+<body id="game">
+    <div id="stats">
+        <p class="statItem" id="numSetsFound"></p>
+        <p class="statItem" id="numSetsFound2"></p>
+        <p class="statItem" id="numCardsInDeck"></p>
+        <p class="statItem" id="currGameTime"></p>
+        <p class="statItem" id="lastSetTime"></p>
+    </div>
+    <table id="board"></table>
+    <div>
+        <button id="newgame" onClick="newGame()">New Game<br>(esc)</button>
+        <button id="showset" onClick="showSet()">Reveal Set<br>(right)</button>
+        <button id="addcards" onClick="addCards()">Add 3 Cards<br>(\)</button>
+        <button id="pause" onClick="togglePause()">Pause<br>(delete)</button>
+        <button id="twoplayer" onClick="toggleTwoPlayer()">Two Player<br>(`)</button>
+    </div>
+</body>
+<script src="setscript.js"></script>
+</html>

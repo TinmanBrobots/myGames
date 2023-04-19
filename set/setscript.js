@@ -7,6 +7,8 @@ const KEYMAPPINGS = ['KeyQ', 'KeyA', 'KeyZ', 'KeyW', 'KeyS', 'KeyX', 'KeyE', 'Ke
 const TWOPLAYER = [0, 15, 18, 33];
 const KEYBUTTONS = ['Escape', 'ArrowRight', 'Backslash', 'Backspace', 'Backquote']; // New Game, Reveal Set, Add Cards
 
+const IMGPATH = './setshapes/';
+
 const colDark = '#142d4c';
 const colMed = '#385170';
 const colLight = '#9fd3c7';
@@ -172,7 +174,7 @@ function updateLastSet(player2) {
         // Attach figures to smallCard
         let playerSelectedCards = player2 ? selectedCards2 : selectedCards;
         var parsedCard = parseCard(cardsInPlayId[playerSelectedCards[i]]);
-        var src = '../../setshapes/1x/' + parsedCard.slice(0, 3).map((x, j) => IMGNAMES[j][x]).join('') + '.png';
+        var src = IMGPATH + parsedCard.slice(0, 3).map((x, j) => IMGNAMES[j][x]).join('') + '.png';
         for (var j = 0; j < parsedCard[3] + 1; j++) {
             let img = document.createElement("img");
             img.src = src;
@@ -262,7 +264,7 @@ function missingCardId(cardArrays, pos1, pos2) {
 // With pos's cardId already in cardsInPlayId, retreives figure and adds img to card
 function addImg(pos) {
     var arr = parseCard(cardsInPlayId[pos]);
-    var src = '../../setshapes/1x/' + arr.slice(0, 3).map((x, i) => IMGNAMES[i][x]).join('') + '.png';
+    var src = IMGPATH + arr.slice(0, 3).map((x, i) => IMGNAMES[i][x]).join('') + '.png';
     cardsOnBoard[pos].innerHTML = '';
     for (var i = 0; i < arr[3] + 1; i++) {
         let cardImg = document.createElement("img");

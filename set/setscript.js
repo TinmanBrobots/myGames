@@ -245,7 +245,7 @@ function showSet() {
     for (var i = 0; i < set.length; i++) {
         let card = cardsOnBoard[set[i]];
         card.style.backgroundColor = setShown ? CARDCOLOR : CARDHIGHLIGHT;
-        document.getElementById("showset").innerHTML = setShown ? "Reveal Set<br>(right)" : "Hide Set<br>(right)";
+        document.getElementById("showset").innerHTML = setShown ? "Reveal Set<br>[ right ]" : "Hide Set<br>[ right ]";
     }
     setShown = !(setShown);
 }
@@ -343,8 +343,8 @@ function renderBoard(isNewGame) {
         board.appendChild(row);
     }
 
-    showSetButton.innerHTML = "Reveal Set<br>(right)";
-    pauseButton.innerHTML = "Pause<br>(delete)"
+    showSetButton.innerHTML = "Reveal Set<br>[ right ]";
+    pauseButton.innerHTML = "Pause<br>[ delete ]"
     setShown = false;
 }
 
@@ -354,7 +354,7 @@ function updateScoreBoard() {
         "P1 &ensp; " + foundSets + "<br> P2 &ensp; " + foundSets2 : 
         "Sets Found<br>" + foundSets
     );
-    document.getElementById("numCardsInDeck").innerHTML = "Cards Left In Deck<br>" + (81 - deckTop).toString();
+    document.getElementById("numCardsInDeck").innerHTML = "Cards In Deck<br>" + (81 - deckTop).toString();
     document.getElementById("currGameTime").innerHTML = "Time Elapsed<br>" + time;
     document.getElementById("lastSetTime").innerHTML = "This Set<br>" + lastTime;
 }
@@ -383,7 +383,7 @@ function togglePause() {
         pauseState = [addCardsButton.disabled, mustAddCards];
         clearInterval(timerId);
         clearInterval(lastTimerId);
-        pauseButton.innerHTML = 'Resume<br>(delete)';
+        pauseButton.innerHTML = 'Resume<br>[ delete ]';
         showSetButton.disabled = true;
         addCardsButton.disabled = true;
     }
@@ -391,7 +391,7 @@ function togglePause() {
         renderBoard(false);
         timerId = setInterval(() => document.getElementById("currGameTime").innerHTML = "Time Elapsed<br>" + ++time, 1000);
         lastTimerId = setInterval(() => document.getElementById("lastSetTime").innerHTML = "This Set<br>" + ++lastTime, 1000);
-        pauseButton.innerHTML = 'Pause<br>(delete)';
+        pauseButton.innerHTML = 'Pause<br>[ delete ]';
         showSetButton.disabled = false;
         addCardsButton.disabled = pauseState[0];
         toggleButtonHighlight(addCardsButton, pauseState[1]);
@@ -401,7 +401,7 @@ function togglePause() {
 
 function toggleTwoPlayer() {
     twoPlayer = !twoPlayer;
-    twoPlayerButton.innerHTML = twoPlayer ? "Single Player<br>(`)" : "Two Player<br>(`)";
+    twoPlayerButton.innerHTML = twoPlayer ? "Single Player<br>[ ` ]" : "Two Player<br>[ ` ]";
     newGame();
     updateScoreBoard();
 }
@@ -490,10 +490,11 @@ var lastTime = 0;
 
 var lastSetList = document.createElement("table");
 lastSetList.className = "lastset";
-lastSetList.style.backgroundColor = col1;
+lastSetList.style.backgroundColor = P1COLOR;
+lastSetList.style.color = colDark;
 var lastSetList2 = document.createElement("table");
 lastSetList2.className = "lastset";
-lastSetList2.style.backgroundColor = col2;
+lastSetList2.style.backgroundColor = P2COLOR;
 lastSetList2.style.color = colWhite;
 
 var newGameButton = document.getElementById("newgame");

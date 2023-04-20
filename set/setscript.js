@@ -311,13 +311,13 @@ function handleKeyUp(key) {
             newGame();
             break;
         case 1:
-            paused ? null : showSet();
+            (paused || gameOver) ? null : showSet();
             break;
         case 2:
-            (!paused && !(addCardsButton.disabled)) ? addCards() : null;
+            (paused || addCardsButton.disabled || gameOver) ? null : addCards() ;
             break;
         case 3:
-            togglePause();
+            (gameOver) ? none : togglePause();
             break;
         case 4:
             toggleTwoPlayer();

@@ -82,6 +82,7 @@ button[disabled=true]{
 .lastset{
     display: inline-block;
     border: 1px solid var(--col-black);
+    border-radius: 5px;
     padding: 3px;
     position: relative;
     font-family: Bahnschrift;

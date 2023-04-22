@@ -53,7 +53,8 @@ function parseCard(cardId) {
 
 // Clicking Board
 function select(target, player2){
-    var pos = parseInt(target.id);
+    let card = (target.nodeName == "DIV") ? target : target.parentElement;
+    var pos = parseInt(card.id);
     let playerSelectedCards = player2 ? selectedCards2 : selectedCards;
     var toggleOn = !(playerSelectedCards.includes(pos));
     toggleCardBorder(pos, toggleOn, player2);
@@ -271,7 +272,6 @@ function addImg(pos) {
         cardImg.className = "figure";
         cardImg.src = src;
         cardsOnBoard[pos].appendChild(cardImg);
-        twoPlayer ? null : cardImg.addEventListener('click', e => select(e.target.parentElement));
     }
 }
 

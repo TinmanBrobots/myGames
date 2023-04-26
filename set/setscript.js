@@ -153,6 +153,7 @@ function addCards(){
     unselectAll(true);
     unselectAll(false);
     renderBoard(false);
+    updateScoreBoard();
     toggleButtonHighlight(addCardsButton, false);
     mustAddCards = false;
 
@@ -245,7 +246,7 @@ function showSet() {
     for (var i = 0; i < set.length; i++) {
         let card = cardsOnBoard[set[i]];
         card.style.backgroundColor = setShown ? CARDCOLOR : CARDHIGHLIGHT;
-        document.getElementById("showset").innerHTML = setShown ? "Reveal Set<br>[ right ]" : "Hide Set<br>[ right ]";
+        document.getElementById("showset").innerHTML = setShown ? "Reveal Set<br>[ &#x279C; ]" : "Hide Set<br>[ &#x279C; ]";
     }
     setShown = !(setShown);
 }
@@ -343,7 +344,7 @@ function renderBoard(isNewGame) {
         board.appendChild(row);
     }
 
-    showSetButton.innerHTML = "Reveal Set<br>[ right ]";
+    showSetButton.innerHTML = "Reveal Set<br>[ &#x279C; ]";
     pauseButton.innerHTML = "Pause<br>[ delete ]"
     setShown = false;
 }
@@ -517,7 +518,8 @@ var lastTimerId = setInterval(() => document.getElementById("lastSetTime").inner
 
 /*
 To Do:
-> Performance Graphics/Fun Statistics (eg Set Similarity Score)
+> Performance Graphics/Fun Statistics (eg Set Complexity Score)
 > Leaderboard
 > Online Real-Time Play
+> Two games simultaneously (same deck)
 */

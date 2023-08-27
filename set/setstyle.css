@@ -17,11 +17,12 @@
     --col-down: #3e4a61;
     --col-1: #ff9a3c;
     --col-2: #ff0000;
+    --font: Trebuchet MS;
 }
 
 body{
     background-color: var(--col-med);
-    font-family: Bahnschrift Light;
+    font-family: var(--font);
 }
 
 button{
@@ -35,7 +36,7 @@ button{
     display: inline-block;
     margin-top: 5px;
     margin-bottom: 5px;
-    font-family: Bahnschrift;
+    font-family: var(--font);
 }
 button:hover{
     background-color: var(--col-med)!important;
@@ -87,7 +88,7 @@ button[disabled=true]{
     padding: 3px;
     margin-right: 3px;
     position: relative;
-    font-family: Bahnschrift;
+    font-family: var(--font);
 }
 
 .card{
@@ -114,4 +115,8 @@ button[disabled=true]{
     margin-top: var(--margin-top);
     margin-left: var(--margin-side);
     margin-right: var(--margin-side);
+}
+
+.numSets{
+    display: none;
 }

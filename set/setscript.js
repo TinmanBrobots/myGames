@@ -194,6 +194,15 @@ function updateLastSet(player2) {
     thisSetTime.innerHTML = lastTime.toString() + "s";
     timeSlot.appendChild(thisSetTime);
     row.appendChild(timeSlot);
+    
+    // Add num sets on board
+    let numSetsSlot = document.createElement("td");
+    let numSets = document.createElement("p");
+    numSets.classList.add("numSets");
+    numSets.innerHTML = " " + getNumSets().toString() + " sets";
+    numSetsSlot.appendChild(numSets);
+    row.appendChild(numSetsSlot);
+
 
     player2 ? lastSetList2.prepend(row) : lastSetList.prepend(row);    
 }
@@ -234,6 +243,20 @@ function findSet() {
         }
     }
     return [-1, -1, -1];
+}
+
+function getNumSets() {
+    let cardArrays = cardsInPlayId.map(x => parseCard(x));
+    let count = 0;
+    for (var i = 0; i < numCardsInPlay-2; i++) {
+        for (var j = i+1; j < numCardsInPlay-1; j++) {
+            let k = cardsInPlayId.findIndex(x => x === missingCardId(cardArrays, i, j), j + 1);
+            if (k >= 0) { 
+                count++;
+            }
+        }
+    }
+    return count;
 }
 
 // Shows a set on the board if one exists
@@ -376,6 +399,7 @@ function handleGameOver() {
     showSetButton.disabled = true;
     pauseButton.disabled = true;
     gameOver = true;
+    toggleNumSetsVisible();
 }
 
 function togglePause() {
@@ -415,6 +439,13 @@ function toggleButtonHighlight(button, toggleOn) {
     else {
         button.style.backgroundColor = BUTTONCOLOR;
         button.style.color = colWhite;
+    }
+}
+
+function toggleNumSetsVisible() {
+    numSetsList = document.getElementsByClassName("numSets");
+    for (var i = 0; i < numSetsList.length; i++) {
+        numSetsList[i].style.display = gameOver ? "inline-block" : "none";
     }
 }
 

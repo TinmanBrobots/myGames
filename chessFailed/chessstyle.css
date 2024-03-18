@@ -1,0 +1,34 @@
+:root{
+    --square-size: 50px;
+    --font: Trebuchet MS;
+}
+
+body{
+    background-color: black;
+    font-family: var(--font);
+    color: black;
+}
+
+.board{
+    margin: 0px;
+    padding: 0px;
+}
+
+.row{
+    margin: 0px;
+    padding: 0px;
+}
+
+.square{
+    width: var(--square-size);
+    height: var(--square-size);
+    border: 1px solid var(--col-black);
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+}
+
+p{
+    margin: 0px;
+    padding: 0px;
+}

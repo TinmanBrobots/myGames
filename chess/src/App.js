@@ -10,16 +10,9 @@ import './css/app.css';
 import { useState } from 'react';
 
 function App() {
-    const [reset, setReset] = useState(false); // indicates if game should be reset
-    const [winner, setWinner] = useState(""); // indicates the current winner
-    
-    const resetBoard = () => {
-        setReset(true);
-    }
-
     return (
         <div className="App">
-            <Board n={n} reset={reset} setReset={setReset} winner={winner} setWinner={setWinner} />
+            <Board />
         </div>
     );
 }

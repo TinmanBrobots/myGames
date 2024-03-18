@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "EaeNQ93aW7EokSuUs7l0KKFSUO+89x+MakxbqR65adLrtMK2u7tvr/82nZZy6c2iVMCX5Epld0eZZfCz2C9+RQ==",
+  "success": true,
+  "projectFilePath": "/Users/mrobbins/Documents/Coding Projects/myGames/GodotProjects/GodotTestC#/GodotTestC#.csproj",
+  "expectedPackageFiles": [
+    "/Users/mrobbins/.nuget/packages/godot.sourcegenerators/4.2.1/godot.sourcegenerators.4.2.1.nupkg.sha512",
+    "/Users/mrobbins/.nuget/packages/godotsharp/4.2.1/godotsharp.4.2.1.nupkg.sha512",
+    "/Users/mrobbins/.nuget/packages/godotsharpeditor/4.2.1/godotsharpeditor.4.2.1.nupkg.sha512",
+    "/Users/mrobbins/.nuget/packages/microsoft.netcore.app.ref/6.0.26/microsoft.netcore.app.ref.6.0.26.nupkg.sha512",
+    "/Users/mrobbins/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.26/microsoft.aspnetcore.app.ref.6.0.26.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -12,12 +12,9 @@ const React = require('react');
 
 /**
  To Do:
- * Add Castling
- * Add En Passante
  * Show Captured Pieces
  * Make it Pretty
  * Add a Clock
- * Add Undo Feature
  * Add Notation
  */
 
@@ -76,8 +73,7 @@ class Board extends React.Component {
     getPos(piece, inCoords) {
         const { data } = this.state
         const abs = _.findIndex(data, p => p === piece);
-        const ret = inCoords ? [...toCoord(abs)] : abs;
-        return ret;
+        return inCoords ? [...toCoord(abs)] : abs;
     }
 
     /**

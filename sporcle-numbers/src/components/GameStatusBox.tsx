@@ -1,23 +1,43 @@
 import { Box, Button, Typography } from '@mui/material';
+import type { GameStatus } from '../types/game';
 
-interface GameStatusOverlayProps {
-  gameStatus: 'playing' | 'won' | 'lost';
+interface GameStatusBoxProps {
+  gameStatus: GameStatus;
   currentNumber: number | null;
   onRestart: () => void;
 }
 
-export function GameStatusOverlay({ gameStatus, currentNumber, onRestart }: GameStatusOverlayProps) {
-  if (gameStatus === 'playing') return null;
+export function GameStatusBox({ gameStatus, currentNumber, onRestart }: GameStatusBoxProps) {
+  if (gameStatus === 'playing') {
+    return (
+      <Box
+        sx={{
+          mb: 3,
+          p: 2,
+          borderRadius: 2,
+          bgcolor: 'primary.main',
+          color: 'primary.contrastText',
+        }}
+      >
+        <Typography variant="overline" sx={{ opacity: 0.9 }}>
+          Place this number
+        </Typography>
+        <Typography variant="h3" component="div" sx={{ fontWeight: 700 }}>
+          {currentNumber ?? '—'}
+        </Typography>
+      </Box>
+    );
+  }
 
   const isWon = gameStatus === 'won';
 
   return (
     <Box
       sx={{
-        mt: 3,
+        mb: 3,
         p: 3,
         borderRadius: 2,
-        bgcolor: isWon ? 'success.light' : 'error.light',
+        bgcolor: isWon ? 'success.main' : 'error.main',
         color: isWon ? 'success.contrastText' : 'error.contrastText',
         textAlign: 'center',
       }}

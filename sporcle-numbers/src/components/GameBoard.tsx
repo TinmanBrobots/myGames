@@ -1,9 +1,9 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
+import confetti from 'canvas-confetti';
 import { Box, Button, Typography } from '@mui/material';
 import { useGameState } from '../hooks/useGameState';
-import { CurrentNumberDisplay } from './CurrentNumberDisplay';
+import { GameStatusBox } from './GameStatusBox';
 import { SlotRow } from './SlotRow';
-import { GameStatusOverlay } from './GameStatusOverlay';
 
 export function GameBoard() {
   const {
@@ -37,6 +37,38 @@ export function GameBoard() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
 
+  const hasTriggeredConfetti = useRef(false);
+  useEffect(() => {
+    if (gameStatus === 'won') {
+      if (!hasTriggeredConfetti.current) {
+        hasTriggeredConfetti.current = true;
+        const duration = 3000;
+        const end = Date.now() + duration;
+
+        const frame = () => {
+          confetti({
+            particleCount: 3,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0, y: 0.6 },
+            colors: ['#2e7d32', '#4caf50', '#81c784', '#ffd54f', '#ff9800'],
+          });
+          confetti({
+            particleCount: 3,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1, y: 0.6 },
+            colors: ['#2e7d32', '#4caf50', '#81c784', '#ffd54f', '#ff9800'],
+          });
+          if (Date.now() < end) requestAnimationFrame(frame);
+        };
+        frame();
+      }
+    } else {
+      hasTriggeredConfetti.current = false;
+    }
+  }, [gameStatus]);
+
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto', p: 3 }}>
       <Typography variant="h4" component="h1" sx={{ mb: 3, textAlign: 'center', fontWeight: 700 }}>
@@ -48,7 +80,11 @@ export function GameBoard() {
         1–9 or 0 (for slot 10).
       </Typography>
 
-      <CurrentNumberDisplay number={currentNumber} gameStatus={gameStatus} />
+      <GameStatusBox
+        gameStatus={gameStatus}
+        currentNumber={currentNumber}
+        onRestart={restart}
+      />
 
       <SlotRow
         slots={slots}
@@ -62,12 +98,6 @@ export function GameBoard() {
           Restart
         </Button>
       </Box>
-
-      <GameStatusOverlay
-        gameStatus={gameStatus}
-        currentNumber={currentNumber}
-        onRestart={restart}
-      />
     </Box>
   );
 }

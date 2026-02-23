@@ -15,8 +15,10 @@ export function SlotRow({ slots, validSlotIndices, isDisabled, onPlace }: SlotRo
       sx={{
         display: 'flex',
         gap: 2,
+        flexDirection: { xs: 'column', sm: 'row' },
         flexWrap: 'nowrap',
         justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
       {slots.map((value, index) => (

@@ -7,9 +7,10 @@ import { countSets } from '@/lib/validator';
 interface ScoreBoardProps {
   state: GameState;
   players: Player[];
+  showPlayerScores?: boolean;
 }
 
-export function ScoreBoard({ state, players }: ScoreBoardProps) {
+export function ScoreBoard({ state, players, showPlayerScores = true }: ScoreBoardProps) {
   const [elapsed, setElapsed] = useState(0);
   const [sinceLastSet, setSinceLastSet] = useState(0);
 
@@ -33,7 +34,7 @@ export function ScoreBoard({ state, players }: ScoreBoardProps) {
 
   return (
     <div className="flex flex-col gap-3 rounded-2xl bg-card border border-border p-4 min-w-[120px] text-center">
-      {players.map((p) => {
+      {showPlayerScores && players.map((p) => {
         const found = state.foundSets.filter(s => s.playerId === p.id).length;
         return (
           <div key={p.id}>
@@ -44,17 +45,17 @@ export function ScoreBoard({ state, players }: ScoreBoardProps) {
         );
       })}
 
-      <hr className="border-border" />
+      {showPlayerScores && <hr className="border-border" />}
 
       <div>
         <p className="text-xs text-muted-foreground uppercase tracking-wider">Deck</p>
         <p className="text-xl font-semibold">{cardsInDeck}</p>
       </div>
 
-      <div>
+      {/* <div>
         <p className="text-xs text-muted-foreground uppercase tracking-wider">Sets on board</p>
         <p className="text-xl font-semibold">{setsOnBoard}</p>
-      </div>
+      </div> */}
 
       <hr className="border-border" />
 

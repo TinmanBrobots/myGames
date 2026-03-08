@@ -48,7 +48,7 @@ function ControlButton({
           <KeyHint>{keyHint}</KeyHint>
         </Button>
       </TooltipTrigger>
-      <TooltipContent side="top">
+      <TooltipContent side="bottom">
         <p>Keyboard: {keyHint}</p>
       </TooltipContent>
     </Tooltip>
@@ -83,7 +83,7 @@ export function Controls({
       />
       <ControlButton
         label="Add 3 Cards"
-        keyHint="\\"
+        keyHint="\"
         onClick={onAddCards}
         disabled={!canAddCards || isPaused || isOver}
         highlighted={!canAddCards && !isPaused && !isOver ? false : false}

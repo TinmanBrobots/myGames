@@ -12,10 +12,14 @@ interface BoardProps {
 }
 
 export function Board({ board, selections, hintIndices, onCardClick, isPaused }: BoardProps) {
-  // Build a reverse lookup: boardIndex → playerId
-  const selectedByPlayer: Record<number, string> = {};
+  // Build a reverse lookup: boardIndex → ordered list of player IDs who selected it.
+  // Ordered so the first selector is the inner ring, second is the outer dashed ring.
+  const selectedByPlayers: Record<number, string[]> = {};
   for (const [playerId, indices] of Object.entries(selections)) {
-    for (const i of indices) selectedByPlayer[i] = playerId;
+    for (const i of indices) {
+      if (!selectedByPlayers[i]) selectedByPlayers[i] = [];
+      selectedByPlayers[i].push(playerId);
+    }
   }
 
   const columns = Math.ceil(board.length / 3);
@@ -45,7 +49,7 @@ export function Board({ board, selections, hintIndices, onCardClick, isPaused }:
             key={`${index}-${cardId}`}
             cardId={cardId}
             boardIndex={index}
-            selectedBy={selectedByPlayer[index] ?? null}
+            selectedBy={selectedByPlayers[index] ?? []}
             isHinted={hintIndices?.includes(index) ?? false}
             onClick={onCardClick}
           />

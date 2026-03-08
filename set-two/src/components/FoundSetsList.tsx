@@ -35,10 +35,11 @@ export function FoundSetsList({ foundSets, playerNames, showPlayerNames }: Found
                   key={j}
                   cardId={id}
                   boardIndex={-1}
-                  selectedBy={null}
+                  selectedBy={[]}
                   isHinted={false}
                   onClick={() => {}}
                   size="small"
+                  disabled={true}
                 />
               ))}
             </div>

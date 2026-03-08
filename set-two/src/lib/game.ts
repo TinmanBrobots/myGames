@@ -28,15 +28,10 @@ function dealCards(state: GameState, count: number): GameState {
   return { ...state, board, deckCursor: cursor };
 }
 
-/** Remove cards at given board indices and compact if all indices are at the end. */
-function removeFromBoard(board: (CardId | null)[], indices: number[]): (CardId | null)[] {
-  const next = [...board];
-  for (const i of indices) next[i] = null;
-
-  // If the board has trailing nulls (i.e. we're below 12 cards), trim them
-  while (next.length > 0 && next[next.length - 1] === null) next.pop();
-
-  return next;
+/** Remove cards at given board indices and return a fully compacted array (no nulls). */
+function removeFromBoard(board: (CardId | null)[], indices: number[]): CardId[] {
+  const toRemove = new Set(indices);
+  return board.filter((c, i): c is CardId => c !== null && !toRemove.has(i));
 }
 
 // ── Public state transitions ──────────────────────────────────────────────────

@@ -81,7 +81,7 @@ export default function LocalTwoPlayerPage() {
         />
 
         <div className="flex flex-col gap-4 items-center">
-          <ScoreBoard state={state} players={players} showPlayerScores={false} />
+          <ScoreBoard state={state} players={players} horizontal />
           <Board
             board={state.board}
             selections={state.selections}

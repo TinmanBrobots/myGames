@@ -1,7 +1,13 @@
 'use client';
 
 import { type CardId } from '@/lib/types';
-import { GameCard } from './GameCard';
+import { GameCard, type CornerPip } from './GameCard';
+
+// Position (0-3) assigned to each color key for corner pip placement.
+// Matches player panel layout: p1=top-left, p2=top-right, p3=bottom-left, p4=bottom-right.
+const COLOR_PIP_POSITION: Record<string, 0 | 1 | 2 | 3> = {
+  p1: 0, p2: 1, p3: 2, p4: 3,
+};
 
 interface BoardProps {
   board: (CardId | null)[];
@@ -9,16 +15,48 @@ interface BoardProps {
   hintIndices: [number, number, number] | null;
   onCardClick: (boardIndex: number) => void;
   isPaused: boolean;
+  /** Maps arbitrary player IDs → color keys ('p1'|'p2'|'p3'|'p4'). Used in online mode. */
+  playerColorMap?: Record<string, string>;
+  /**
+   * Online mode: the current player's color key ('p1'…'p4').
+   * When set, only this player's selection shows as a ring; all others become corner pips.
+   * When absent (local mode), all selections render as rings (dual-ring for 2 players).
+   */
+  myColorKey?: string;
 }
 
-export function Board({ board, selections, hintIndices, onCardClick, isPaused }: BoardProps) {
-  // Build a reverse lookup: boardIndex → ordered list of player IDs who selected it.
-  // Ordered so the first selector is the inner ring, second is the outer dashed ring.
-  const selectedByPlayers: Record<number, string[]> = {};
+export function Board({
+  board,
+  selections,
+  hintIndices,
+  onCardClick,
+  isPaused,
+  playerColorMap,
+  myColorKey,
+}: BoardProps) {
+  // Build per-card data: ring selectors and corner pips.
+  const ringsByIndex: Record<number, string[]> = {};
+  const pipsByIndex: Record<number, CornerPip[]> = {};
+
   for (const [playerId, indices] of Object.entries(selections)) {
+    const colorKey = playerColorMap?.[playerId] ?? playerId;
+
     for (const i of indices) {
-      if (!selectedByPlayers[i]) selectedByPlayers[i] = [];
-      selectedByPlayers[i].push(playerId);
+      if (myColorKey !== undefined) {
+        // Online mode: ring only for me, corner pip for everyone else.
+        if (colorKey === myColorKey) {
+          if (!ringsByIndex[i]) ringsByIndex[i] = [];
+          ringsByIndex[i].push(colorKey);
+        } else {
+          const position = COLOR_PIP_POSITION[colorKey] ?? 0;
+          if (!pipsByIndex[i]) pipsByIndex[i] = [];
+          pipsByIndex[i].push({ position, color: `var(--color-${colorKey})` });
+        }
+      } else {
+        // Local mode: all selections render as rings (dual-ring for 2 players).
+        if (!ringsByIndex[i]) ringsByIndex[i] = [];
+        ringsByIndex[i].push(colorKey);
+      }
     }
   }
 
@@ -49,7 +87,8 @@ export function Board({ board, selections, hintIndices, onCardClick, isPaused }:
             key={`${index}-${cardId}`}
             cardId={cardId}
             boardIndex={index}
-            selectedBy={selectedByPlayers[index] ?? []}
+            selectedBy={ringsByIndex[index] ?? []}
+            cornerPips={pipsByIndex[index]}
             isHinted={hintIndices?.includes(index) ?? false}
             onClick={onCardClick}
           />

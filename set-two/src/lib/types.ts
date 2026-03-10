@@ -48,29 +48,42 @@ export interface GameState {
   lastSetAt: number;    // Date.now()
 }
 
-export interface Room {
+// ── Online multiplayer types ──────────────────────────────────────────────────
+
+export type RoomPhase = 'lobby' | 'playing' | 'over';
+
+export interface OnlinePlayer {
+  /** Also used as the playerId key in GameState.selections. */
+  sessionToken: string;
+  name: string;
+  connected: boolean;
+}
+
+export interface OnlineRoom {
   id: string;
-  players: Player[];
-  state: GameState;
-  mode: 'solo' | 'local' | 'online';
+  /** sessionToken of the room creator. */
+  hostToken: string;
+  players: OnlinePlayer[];
+  phase: RoomPhase;
+  /** null while in lobby. */
+  gameState: GameState | null;
 }
 
 // ── Socket.io typed events ────────────────────────────────────────────────────
 
 export interface ClientToServerEvents {
-  JOIN_ROOM:   (payload: { roomId: string; playerName: string }) => void;
-  SELECT_CARD: (payload: { boardIndex: number }) => void;
-  NEW_GAME:    () => void;
-  ADD_CARDS:   () => void;
-  REVEAL_SET:  () => void;
+  /** Omit roomId to create a new room. */
+  join_room:    (payload: { roomId?: string; playerName: string; sessionToken: string }) => void;
+  start_game:   () => void;
+  select_card:  (payload: { boardIndex: number }) => void;
+  restart_game: () => void;
+  leave_room:   () => void;
+  kick_player:  (payload: { sessionToken: string }) => void;
 }
 
 export interface ServerToClientEvents {
-  ROOM_STATE:    (room: Room) => void;
-  VALID_SET:     (payload: { playerId: string; boardIndices: [number, number, number] }) => void;
-  INVALID_SET:   (payload: { playerId: string }) => void;
-  GAME_OVER:     (payload: { scores: Record<string, number> }) => void;
-  PLAYER_JOINED: (player: Player) => void;
-  PLAYER_LEFT:   (payload: { playerId: string }) => void;
-  ERROR:         (payload: { message: string }) => void;
+  room_update:       (room: OnlineRoom) => void;
+  error:             (payload: { message: string }) => void;
+  /** Emitted to a specific player when they are kicked or forcibly removed. */
+  removed_from_room: () => void;
 }

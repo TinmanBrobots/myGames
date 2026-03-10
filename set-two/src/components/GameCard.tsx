@@ -12,11 +12,26 @@ const PLAYER_COLORS: Record<string, string> = {
   p4: 'var(--color-p4)',
 };
 
+export interface CornerPip {
+  /** 0=top-left  1=top-right  2=bottom-left  3=bottom-right */
+  position: 0 | 1 | 2 | 3;
+  color: string; // CSS color value
+}
+
+const CORNER_PIP_STYLES: Record<0 | 1 | 2 | 3, React.CSSProperties> = {
+  0: { top: 4, left: 4 },
+  1: { top: 4, right: 4 },
+  2: { bottom: 4, left: 4 },
+  3: { bottom: 4, right: 4 },
+};
+
 interface GameCardProps {
   cardId: CardId;
   boardIndex: number;
-  /** Array of player IDs who have selected this card (0, 1, or 2 entries). */
+  /** Color keys for ring rendering (local mode: up to 2; online mode: 0 or 1). */
   selectedBy: string[];
+  /** Small corner dots showing other online players' selections. */
+  cornerPips?: CornerPip[];
   isHinted: boolean;
   onClick: (boardIndex: number) => void;
   size?: 'normal' | 'small';
@@ -46,6 +61,7 @@ export function GameCard({
   cardId,
   boardIndex,
   selectedBy,
+  cornerPips,
   isHinted,
   onClick,
   size = 'normal',
@@ -68,7 +84,7 @@ export function GameCard({
       onClick={() => onClick(boardIndex)}
       style={selectionStyle(selectedBy)}
       className={cn(
-        'flex flex-row items-center justify-center rounded-xl bg-white border border-gray-300',
+        'relative flex flex-row items-center justify-center rounded-xl bg-white border border-gray-300',
         'transition-[box-shadow,outline,background-color] duration-75',
         'cursor-pointer select-none',
         size === 'normal' && 'w-36 h-24 px-2 gap-1.5',
@@ -89,6 +105,15 @@ export function GameCard({
           height={0}
           sizes="10vw"
           style={imgStyle}
+        />
+      ))}
+
+      {/* Corner pips: other players' selections in online mode */}
+      {cornerPips?.map(({ position, color }) => (
+        <span
+          key={position}
+          className="absolute w-2.5 h-2.5 rounded-full pointer-events-none"
+          style={{ ...CORNER_PIP_STYLES[position], backgroundColor: color }}
         />
       ))}
     </button>

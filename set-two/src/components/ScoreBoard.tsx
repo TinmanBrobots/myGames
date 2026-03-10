@@ -8,9 +8,11 @@ interface ScoreBoardProps {
   state: GameState;
   players: Player[];
   showPlayerScores?: boolean;
+  /** Render stats in a single horizontal row instead of a vertical stack. */
+  horizontal?: boolean;
 }
 
-export function ScoreBoard({ state, players, showPlayerScores = true }: ScoreBoardProps) {
+export function ScoreBoard({ state, players, showPlayerScores = true, horizontal = false }: ScoreBoardProps) {
   const [elapsed, setElapsed] = useState(0);
   const [sinceLastSet, setSinceLastSet] = useState(0);
 
@@ -32,6 +34,27 @@ export function ScoreBoard({ state, players, showPlayerScores = true }: ScoreBoa
     return `${m}:${String(sec).padStart(2, '0')}`;
   };
 
+  if (horizontal) {
+    return (
+      <div className="flex items-center gap-6 rounded-2xl bg-card border border-border px-6 py-3 text-center">
+        <div>
+          <p className="text-xs text-muted-foreground uppercase tracking-wider">Deck</p>
+          <p className="text-xl font-semibold">{cardsInDeck}</p>
+        </div>
+        <div className="w-px h-8 bg-border" />
+        <div>
+          <p className="text-xs text-muted-foreground uppercase tracking-wider">Time</p>
+          <p className="text-xl font-semibold">{formatTime(elapsed)}</p>
+        </div>
+        <div className="w-px h-8 bg-border" />
+        <div>
+          <p className="text-xs text-muted-foreground uppercase tracking-wider">This set</p>
+          <p className="text-xl font-semibold">{formatTime(sinceLastSet)}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-3 rounded-2xl bg-card border border-border p-4 min-w-[120px] text-center">
       {showPlayerScores && players.map((p) => {
@@ -51,11 +74,6 @@ export function ScoreBoard({ state, players, showPlayerScores = true }: ScoreBoa
         <p className="text-xs text-muted-foreground uppercase tracking-wider">Deck</p>
         <p className="text-xl font-semibold">{cardsInDeck}</p>
       </div>
-
-      {/* <div>
-        <p className="text-xs text-muted-foreground uppercase tracking-wider">Sets on board</p>
-        <p className="text-xl font-semibold">{setsOnBoard}</p>
-      </div> */}
 
       <hr className="border-border" />
 

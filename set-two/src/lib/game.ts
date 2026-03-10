@@ -77,12 +77,15 @@ export function submitSelection(state: GameState, playerId: string): GameState {
 
   const [a, b, c] = indices.map(i => parseCard(state.board[i]!));
 
-  // Clear selection regardless of validity
-  const clearedSelections = { ...state.selections, [playerId]: [] };
-
+  // Invalid set — clear only the submitting player's selection
   if (!isValidSet(a, b, c)) {
-    return { ...state, selections: clearedSelections };
+    return { ...state, selections: { ...state.selections, [playerId]: [] } };
   }
+
+  // Valid set — clear ALL players' selections so stale picks don't persist
+  const clearedSelections = Object.fromEntries(
+    Object.keys(state.selections).map(id => [id, []])
+  );
 
   // Valid set — record it, remove cards, deal replacements
   const foundSet: FoundSet = {

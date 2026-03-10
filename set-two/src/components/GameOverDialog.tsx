@@ -40,6 +40,8 @@ interface GameOverDialogProps {
   totalTime: number;
   onNewGame: () => void;
   onClose: () => void;
+  /** Maps arbitrary player IDs → color keys ('p1'…'p4'). Used in online mode. */
+  playerColorMap?: Record<string, string>;
 }
 
 export function GameOverDialog({
@@ -49,6 +51,7 @@ export function GameOverDialog({
   totalTime,
   onNewGame,
   onClose,
+  playerColorMap,
 }: GameOverDialogProps) {
   const scores = Object.fromEntries(players.map(p => [p.id, 0]));
   for (const fs of foundSets) {
@@ -65,7 +68,8 @@ export function GameOverDialog({
   // Fire confetti when the dialog opens
   useEffect(() => {
     if (!open) return;
-    const color = winner ? (PLAYER_HEX[winner.id] ?? '#ffffff') : '#ffd700';
+    const colorKey = winner ? (playerColorMap?.[winner.id] ?? winner.id) : null;
+    const color = colorKey ? (PLAYER_HEX[colorKey] ?? '#ffffff') : '#ffd700';
     const timer = setTimeout(() => launchConfetti(color), 150);
     return () => clearTimeout(timer);
   }, [open, winner]);
@@ -82,7 +86,8 @@ export function GameOverDialog({
       : `${winner!.name} Wins!`
     : 'Game Over';
 
-  const winnerColor = winner ? PLAYER_HEX[winner.id] : undefined;
+  const winnerColorKey = winner ? (playerColorMap?.[winner.id] ?? winner.id) : undefined;
+  const winnerColor = winnerColorKey ? PLAYER_HEX[winnerColorKey] : undefined;
 
   return (
     <Dialog open={open} onOpenChange={isOpen => { if (!isOpen) onClose(); }}>

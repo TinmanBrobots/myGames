@@ -14,8 +14,8 @@ export default function Home() {
           <Button className="w-full" size="lg" variant="secondary">Local 2-Player</Button>
         </Link>
         <Link href="/room">
-          <Button className="w-full" size="lg" variant="secondary" disabled>
-            Online (coming soon)
+          <Button className="w-full" size="lg" variant="secondary">
+            Online Multiplayer
           </Button>
         </Link>
       </div>

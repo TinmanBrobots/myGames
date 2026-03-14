@@ -36,20 +36,20 @@ export function ScoreBoard({ state, players, showPlayerScores = true, horizontal
 
   if (horizontal) {
     return (
-      <div className="flex items-center gap-6 rounded-2xl bg-card border border-border px-6 py-3 text-center">
+      <div className="flex items-center gap-3 lg:gap-6 rounded-2xl bg-card border border-border px-3 py-2 lg:px-6 lg:py-3 text-center">
         <div>
-          <p className="text-xs text-muted-foreground uppercase tracking-wider">Deck</p>
-          <p className="text-xl font-semibold">{cardsInDeck}</p>
+          <p className="text-[0.6rem] lg:text-xs text-muted-foreground uppercase tracking-wider">Deck</p>
+          <p className="text-base lg:text-xl font-semibold">{cardsInDeck}</p>
         </div>
-        <div className="w-px h-8 bg-border" />
+        <div className="w-px h-6 lg:h-8 bg-border" />
         <div>
-          <p className="text-xs text-muted-foreground uppercase tracking-wider">Time</p>
-          <p className="text-xl font-semibold">{formatTime(elapsed)}</p>
+          <p className="text-[0.6rem] lg:text-xs text-muted-foreground uppercase tracking-wider">Time</p>
+          <p className="text-base lg:text-xl font-semibold">{formatTime(elapsed)}</p>
         </div>
-        <div className="w-px h-8 bg-border" />
+        <div className="w-px h-6 lg:h-8 bg-border" />
         <div>
-          <p className="text-xs text-muted-foreground uppercase tracking-wider">This set</p>
-          <p className="text-xl font-semibold">{formatTime(sinceLastSet)}</p>
+          <p className="text-[0.6rem] lg:text-xs text-muted-foreground uppercase tracking-wider">This set</p>
+          <p className="text-base lg:text-xl font-semibold">{formatTime(sinceLastSet)}</p>
         </div>
       </div>
     );

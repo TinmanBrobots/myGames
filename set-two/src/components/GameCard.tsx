@@ -79,15 +79,19 @@ export function GameCard({
     pointerEvents: 'none',
   };
 
+  const normalStyle: React.CSSProperties = size === 'normal'
+    ? { width: 'var(--board-card-w)', height: 'var(--board-card-h)', ...selectionStyle(selectedBy) }
+    : selectionStyle(selectedBy);
+
   return (
     <button
       onClick={() => onClick(boardIndex)}
-      style={selectionStyle(selectedBy)}
+      style={normalStyle}
       className={cn(
         'relative flex flex-row items-center justify-center rounded-xl bg-white border border-gray-300',
         'transition-[box-shadow,outline,background-color] duration-75',
         'cursor-pointer select-none',
-        size === 'normal' && 'w-36 h-24 px-2 gap-1.5',
+        size === 'normal' && 'px-2 gap-1.5',
         size === 'small' && 'w-18 h-12 px-1 gap-1',
         isHinted && !isSelected && 'ring-4 ring-[var(--color-accent)] bg-teal-50',
         'hover:brightness-95 active:scale-[0.97] active:duration-[30ms]'

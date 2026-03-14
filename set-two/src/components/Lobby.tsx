@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { OnlineRoom } from '@/lib/types';
 import { Button } from '@/components/ui/button';
+import { Copy, Share2 } from 'lucide-react';
 
 interface LobbyProps {
   room: OnlineRoom;
@@ -21,7 +22,11 @@ export function Lobby({ room, sessionToken, onStart, onLeave, onKick }: LobbyPro
   const handleCopy = () => {
     navigator.clipboard.writeText(shareUrl);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setTimeout(() => setCopied(false), 1000);
+  };
+
+  const handleShare = () => {
+    navigator.share({ text: `Your friend has invited you to play a game of Set: ${shareUrl}` }).catch(() => {});
   };
 
   return (
@@ -37,9 +42,24 @@ export function Lobby({ room, sessionToken, onStart, onLeave, onKick }: LobbyPro
           <p className="text-xs text-muted-foreground mb-1 uppercase tracking-wider">Room Code</p>
           <p className="text-5xl font-mono font-black tracking-widest mb-2">{room.id}</p>
           <p className="text-xs text-muted-foreground break-all mb-2">{shareUrl}</p>
-          <Button variant="secondary" size="sm" className="w-full" onClick={handleCopy}>
-            {copied ? 'Copied!' : 'Copy Invite Link'}
-          </Button>
+          <div className="flex gap-2 justify-center items-center">
+            <div className="relative flex items-center">
+              <Button variant="secondary" size="sm" className="flex-1" onClick={handleCopy} title="Copy invite link">
+                <Copy size={14} />
+              </Button>
+              <span
+                className="absolute left-1/2 -translate-x-3/2 text-xs text-muted-foreground pointer-events-none transition-opacity duration-200"
+                style={{ opacity: copied ? 1 : 0 }}
+              >
+                Copied!
+              </span>
+            </div>
+            {'share' in navigator && (
+              <Button variant="secondary" size="sm" onClick={handleShare} title="Share invite">
+                <Share2 size={14} />
+              </Button>
+            )}
+          </div>
         </div>
 
         {/* Player list */}
@@ -61,12 +81,14 @@ export function Lobby({ room, sessionToken, onStart, onLeave, onKick }: LobbyPro
                   {p.sessionToken === sessionToken && <span>(you)</span>}
                   {/* Host can kick other non-self players */}
                   {isHost && p.sessionToken !== sessionToken && (
-                    <button
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-auto px-1 py-0 text-xs text-destructive hover:text-destructive hover:bg-destructive/10"
                       onClick={() => onKick(p.sessionToken)}
-                      className="text-destructive hover:underline text-xs"
                     >
                       Kick
-                    </button>
+                    </Button>
                   )}
                 </span>
               </li>

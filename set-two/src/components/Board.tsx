@@ -66,7 +66,10 @@ export function Board({
     return (
       <div
         className="flex items-center justify-center rounded-2xl bg-card border border-border"
-        style={{ width: columns * 152, height: 3 * 104 }}
+        style={{
+          width: `calc(${columns} * var(--board-card-w) + ${columns - 1} * 0.5rem)`,
+          height: `calc(3 * var(--board-card-h) + 2 * 0.5rem)`,
+        }}
       >
         <p className="text-2xl font-semibold text-muted-foreground tracking-wide">PAUSED</p>
       </div>
@@ -75,10 +78,10 @@ export function Board({
 
   return (
     <div
-      className="grid gap-2"
+      className="grid gap-2 p-1.5"
       style={{
-        gridTemplateColumns: `repeat(${columns}, 9rem)`,
-        gridTemplateRows: 'repeat(3, 6rem)',
+        gridTemplateColumns: `repeat(${columns}, var(--board-card-w))`,
+        gridTemplateRows: 'repeat(3, var(--board-card-h))',
       }}
     >
       {board.map((cardId, index) =>
@@ -93,7 +96,11 @@ export function Board({
             onClick={onCardClick}
           />
         ) : (
-          <div key={index} className="w-36 h-24 rounded-xl border border-dashed border-border opacity-30" />
+          <div
+            key={index}
+            className="rounded-xl border border-dashed border-border opacity-30"
+            style={{ width: 'var(--board-card-w)', height: 'var(--board-card-h)' }}
+          />
         )
       )}
     </div>

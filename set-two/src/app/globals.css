@@ -57,6 +57,17 @@
   --color-p2: #ff4040;
   --color-p3: #4ecdc4;
   --color-p4: #a78bfa;
+
+  /* Board card dimensions — compact on mobile, full on desktop */
+  --board-card-w: 6.5rem;
+  --board-card-h: 4.25rem;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --board-card-w: 9rem;
+    --board-card-h: 6rem;
+  }
 }
 
 body {
@@ -64,4 +75,9 @@ body {
   color: hsl(var(--foreground));
   font-family: var(--font-sans), Arial, sans-serif;
   min-height: 100vh;
+}
+
+/* Eliminate 300ms tap delay on all interactive elements */
+button, [role="button"], a {
+  touch-action: manipulation;
 }
